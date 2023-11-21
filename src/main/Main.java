@@ -5,12 +5,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class Main implements MouseListener{
+public class Main implements MouseListener, ActionListener{
     public static JLabel[][] board;
     public static int player = 1;
     public static ImageIcon computer ;
     public static ImageIcon user;
     public static ImageIcon background ;
+    JMenuBar menubar;
+    JMenu game;
+    JMenuItem restart;
     int caseNO=0;
     Case c = new Case();
 
@@ -21,6 +24,14 @@ public class Main implements MouseListener{
         background = new ImageIcon(getClass().getResource("/Images/Background.png"));
         JFrame f = new JFrame("TicTacToe");
         f.setLayout(new GridLayout(3, 3));
+        menubar = new JMenuBar();
+        game = new JMenu("Game");
+        restart = new JMenuItem("Restart");
+
+        menubar.add(game);
+        game.add(restart);
+        restart.addActionListener(this);
+        f.setJMenuBar(menubar);
 
         board = new JLabel[3][3];
         for (int row = 0; row < 3; row++) {
@@ -79,6 +90,13 @@ public class Main implements MouseListener{
             }
 
         }
+    }
+
+    public void actionPerformed(ActionEvent e){
+            if(e.getSource()==restart){
+                player = 1;
+                initializeGame();
+            }
     }
 
     @Override
